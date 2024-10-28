@@ -18,6 +18,11 @@ const UserComponent = () => {
         setEmail('')
     }
 
+    const handleDelete = async (id) => {
+        const response = await axios.delete(`http://localhost:5000/users/${id}`)
+        console.log(response.data)
+    }
+
     useEffect(() => {
         fetchUsers()
     }, [])
@@ -36,8 +41,13 @@ const UserComponent = () => {
             <button onClick={addUser}>Add user</button>
 
             <ul>
+
                 {users.map(user => (
-                    <li key = {user.id}>{user.name} - {user.email}</li>
+                    <div  key = {user.id}>
+                        <li> {user.name} : {user.email} 
+                            <button onClick={() => handleDelete(user.id)}>Delete</button>  
+                        </li>                      
+                    </div>
                 ))}
             </ul>
         </div>
